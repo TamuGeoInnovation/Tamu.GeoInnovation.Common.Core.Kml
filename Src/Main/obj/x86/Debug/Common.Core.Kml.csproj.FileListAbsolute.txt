@@ -1,0 +1,5 @@
+C:\DevBuild\Tamu\GeoInnovation\Common\Core\Kml\build\1.0.0\debug\Tamu.GeoInnovation.Common.Core.Kml.dll.config
+C:\DevBuild\Tamu\GeoInnovation\Common\Core\Kml\build\1.0.0\debug\Tamu.GeoInnovation.Common.Core.Kml.dll
+C:\DevBuild\Tamu\GeoInnovation\Common\Core\Kml\build\1.0.0\debug\Tamu.GeoInnovation.Common.Core.Kml.pdb
+C:\DevSource\Tamu\GeoInnovation\Common\Core\Kml\Src\Main\obj\x86\Debug\Tamu.GeoInnovation.Common.Core.Kml.dll
+C:\DevSource\Tamu\GeoInnovation\Common\Core\Kml\Src\Main\obj\x86\Debug\Tamu.GeoInnovation.Common.Core.Kml.pdb
