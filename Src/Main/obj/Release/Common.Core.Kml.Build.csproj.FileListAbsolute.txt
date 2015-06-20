@@ -1,0 +1,3 @@
+C:\DevSource\Tamu\GeoInnovation\Common.Core.Kml\build\1.0.0\AnyCPU\release\Tamu.GeoInnovation.Common.Core.Kml.dll.config
+C:\DevSource\Tamu\GeoInnovation\Common.Core.Kml\build\1.0.0\AnyCPU\release\Tamu.GeoInnovation.Common.Core.Kml.dll
+C:\DevSource\Tamu\GeoInnovation\Common.Core.Kml\Src\Main\obj\Release\Tamu.GeoInnovation.Common.Core.Kml.dll
