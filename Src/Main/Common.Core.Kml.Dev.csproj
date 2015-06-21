@@ -135,10 +135,12 @@
     <ProjectReference Include="..\..\..\Common.Core.Colors\Src\Main\Common.Core.Colors.Dev.csproj">
       <Project>{34A8FC48-16D5-4937-8D33-14AE2EE362F4}</Project>
       <Name>Common.Core.Colors.Dev</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Common.Core.Utils\Src\Main\Common.Core.Utils.Dev.csproj">
       <Project>{0744A732-A7FE-4658-967D-C5A583EF08E4}</Project>
       <Name>Common.Core.Utils.Dev</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
