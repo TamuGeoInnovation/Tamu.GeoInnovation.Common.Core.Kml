@@ -264,6 +264,12 @@ namespace USC.GISResearchLab.Common.Core.KML
                     fillNode.AppendChild(doc.CreateTextNode(Convert.ToInt32(polygonFill).ToString()));
                     PolyStyleNode.AppendChild(fillNode);
                 }
+                if (!polygonFill)
+                {
+                    XmlNode fillNode = doc.CreateElement("fill");
+                    fillNode.AppendChild(doc.CreateTextNode(Convert.ToInt32(polygonFill).ToString()));
+                    PolyStyleNode.AppendChild(fillNode);
+                }
 
                 if (polygonOutline)
                 {
@@ -283,6 +289,41 @@ namespace USC.GISResearchLab.Common.Core.KML
         {
             XmlNode PlacemarkNode = doc.CreateElement("Placemark");
             documentNode.AppendChild(PlacemarkNode);
+            
+            XmlNode nameNode = doc.CreateElement("name");
+            nameNode.AppendChild(doc.CreateTextNode(name));
+            PlacemarkNode.AppendChild(nameNode);
+
+            if (!String.IsNullOrEmpty(description))
+            {
+                XmlNode descriptionNode = doc.CreateElement("description");
+                descriptionNode.AppendChild(doc.CreateTextNode(description));
+                PlacemarkNode.AppendChild(descriptionNode);
+            }
+
+            XmlNode PointNode = doc.CreateElement("Point");
+            PlacemarkNode.AppendChild(PointNode);
+            XmlNode coordinateNode = doc.CreateElement("coordinates");
+            PointNode.AppendChild(coordinateNode);
+            coordinateNode.AppendChild(doc.CreateTextNode(lon.ToString(new System.Globalization.CultureInfo("en-US")) + "," + lat.ToString(new System.Globalization.CultureInfo("en-US")) + "," + elevation.ToString(new System.Globalization.CultureInfo("en-US"))));
+
+        }
+        public void AddPoint(float lat, float lon, string name, string description, string recordId)
+        {
+            AddPoint(lat, lon, 0, name, description, recordId);
+        }
+
+        public void AddPoint(float lat, float lon, float elevation, string name, string description, string recordId)
+        {
+            XmlNode PlacemarkNode = doc.CreateElement("Placemark");
+            documentNode.AppendChild(PlacemarkNode);
+
+            if (!String.IsNullOrEmpty(recordId))
+            {
+                XmlNode descriptionNode = doc.CreateElement("ID");
+                descriptionNode.AppendChild(doc.CreateTextNode(recordId));
+                PlacemarkNode.AppendChild(descriptionNode);
+            }
 
             XmlNode nameNode = doc.CreateElement("name");
             nameNode.AppendChild(doc.CreateTextNode(name));
@@ -303,7 +344,7 @@ namespace USC.GISResearchLab.Common.Core.KML
 
         }
 
-        public void AddSqlGeography(SqlGeography sqlGeography, string name, string styleName, string description)
+        public void AddSqlGeography(SqlGeography sqlGeography, string name, string styleName, string description, string recordId)
         {
             try
             {
@@ -314,21 +355,21 @@ namespace USC.GISResearchLab.Common.Core.KML
                     switch (geographyType)
                     {
                         case "Point":
-                            AddSqlGeographyPoint(sqlGeography, name, styleName, description);
+                            AddSqlGeographyPoint(sqlGeography, name, styleName, description, recordId);
                             break;
                         case "LineString":
-                            AddSqlGeographyLine(sqlGeography, name, styleName, description);
+                            AddSqlGeographyLine(sqlGeography, name, styleName, description, recordId);
                             break;
                         case "Polygon":
-                            AddSqlGeographyPolygon(sqlGeography, name, styleName, description);
+                            AddSqlGeographyPolygon(sqlGeography, name, styleName, description, recordId);
                             break;
                         case "MultiPoint":
                         case "MultiLineString":
                         case "MultiPolygon":
-                            AddSqlGeographyMulti(sqlGeography, name, styleName, description);
+                            AddSqlGeographyMulti(sqlGeography, name, styleName, description, recordId);
                             break;
                         case "GeometryCollection":
-                            AddSqlGeographyGeometryCollection(sqlGeography, name, description);
+                            AddSqlGeographyGeometryCollection(sqlGeography, name, description, recordId);
                             break;
                         default:
                             throw new InvalidOperationException("Unknown geography type: " + geographyType);
@@ -341,7 +382,7 @@ namespace USC.GISResearchLab.Common.Core.KML
             }
         }
 
-        public void AddSqlGeography(SqlGeography sqlGeography, string name, string description)
+        public void AddSqlGeography(SqlGeography sqlGeography, string name, string description, string recordId)
         {
             try
             {
@@ -352,21 +393,21 @@ namespace USC.GISResearchLab.Common.Core.KML
                     switch (geographyType)
                     {
                         case "Point":
-                            AddSqlGeographyPoint(sqlGeography, name, description);
+                            AddSqlGeographyPoint(sqlGeography, name, description, recordId);
                             break;
                         case "LineString":
-                            AddSqlGeographyLine(sqlGeography, name, description);
+                            AddSqlGeographyLine(sqlGeography, name, description, recordId);
                             break;
                         case "Polygon":
-                            AddSqlGeographyPolygon(sqlGeography, name, description);
+                            AddSqlGeographyPolygon(sqlGeography, name, description, recordId);
                             break;
                         case "MultiPoint":
                         case "MultiLineString":
                         case "MultiPolygon":
-                            AddSqlGeographyMulti(sqlGeography, name, description);
+                            AddSqlGeographyMulti(sqlGeography, name, description, recordId);
                             break;
                         case "GeometryCollection":
-                            AddSqlGeographyGeometryCollection(sqlGeography, name, description);
+                            AddSqlGeographyGeometryCollection(sqlGeography, name, description, recordId);
                             break;
                         default:
                             throw new InvalidOperationException("Unknown geography type: " + geographyType);
@@ -379,7 +420,7 @@ namespace USC.GISResearchLab.Common.Core.KML
             }
         }
 
-        public void AddSqlGeographyMulti(SqlGeography sqlGeographyMulti, string name, string styleName, string description)
+        public void AddSqlGeographyMulti(SqlGeography sqlGeographyMulti, string name, string styleName, string description, string recordId)
         {
             if (sqlGeographyMulti != null && !sqlGeographyMulti.IsNull)
             {
@@ -394,13 +435,13 @@ namespace USC.GISResearchLab.Common.Core.KML
                         switch (geographyType)
                         {
                             case "Point":
-                                AddSqlGeographyPoint(sqlGeography, name, styleName, description);
+                                AddSqlGeographyPoint(sqlGeography, name, styleName, description, recordId);
                                 break;
                             case "LineString":
-                                AddSqlGeographyLine(sqlGeography, name, styleName, description);
+                                AddSqlGeographyLine(sqlGeography, name, styleName, description, recordId);
                                 break;
                             case "Polygon":
-                                AddSqlGeographyPolygon(sqlGeography, name, styleName, description);
+                                AddSqlGeographyPolygon(sqlGeography, name, styleName, description, recordId);
                                 break;
                             default:
                                 throw new InvalidOperationException("Unknown or unImplemented geography type: " + geographyType);
@@ -410,7 +451,7 @@ namespace USC.GISResearchLab.Common.Core.KML
             }
         }
 
-        public void AddSqlGeographyMulti(SqlGeography sqlGeographyMulti, string name, string description)
+        public void AddSqlGeographyMulti(SqlGeography sqlGeographyMulti, string name, string description, string recordId)
         {
             if (sqlGeographyMulti != null && !sqlGeographyMulti.IsNull)
             {
@@ -437,7 +478,7 @@ namespace USC.GISResearchLab.Common.Core.KML
                     switch (geographyType)
                     {
                         case "Point":
-                            AddSqlGeographyPoints(sqlGeographyList, name, null, description);
+                            AddSqlGeographyPoints(sqlGeographyList, name, null, description, recordId);
                             break;
                         case "LineString":
                             //if (i == 1)
@@ -445,7 +486,7 @@ namespace USC.GISResearchLab.Common.Core.KML
                             //    AddStyleLine(styleName, color, 3.0);
                             //}
 
-                            AddSqlGeographyLines(sqlGeographyList, name,  description);
+                            AddSqlGeographyLines(sqlGeographyList, name,  description, recordId);
                             break;
                         case "Polygon":
                             //if (i == 1)
@@ -453,7 +494,7 @@ namespace USC.GISResearchLab.Common.Core.KML
                             //    AddStylePolygon(styleName, color, false, true, 3.0);
                             //}
 
-                            AddSqlGeographyPolygons(sqlGeographyList, name,  description);
+                            AddSqlGeographyPolygons(sqlGeographyList, name,  description, recordId);
                             break;
                         default:
                             throw new InvalidOperationException("Unknown or unImplemented geography type: " + geographyType);
@@ -463,23 +504,31 @@ namespace USC.GISResearchLab.Common.Core.KML
             }
         }
 
-        public void AddSqlGeographyGeometryCollection(SqlGeography sqlGeographyGeometryCollection, string name, string description)
+        public void AddSqlGeographyGeometryCollection(SqlGeography sqlGeographyGeometryCollection, string name, string description, string recordId)
         {
             Color color = ColorUtils.RandomColor(RandomCount);
             string styleName = "style" + color.ToArgb();
             AddStylePolygon(styleName, color, false, true, 3.0);
-            AddSqlGeographyGeometryCollection(sqlGeographyGeometryCollection, name, styleName, description);
+            AddSqlGeographyGeometryCollection(sqlGeographyGeometryCollection, name, styleName, description, recordId);
         }
 
 
 
-        public void AddSqlGeographyGeometryCollection(SqlGeography sqlGeographyGeometryCollection, string name, string styleName, string description)
+        public void AddSqlGeographyGeometryCollection(SqlGeography sqlGeographyGeometryCollection, string name, string styleName, string description, string recordId)
         {
             XmlNode placemarkNode = doc.CreateElement("Placemark");
             documentNode.AppendChild(placemarkNode);
+
             XmlNode nameNode = doc.CreateElement("name");
             nameNode.AppendChild(doc.CreateTextNode(name));
             placemarkNode.AppendChild(nameNode);
+
+            if (!String.IsNullOrEmpty(recordId))
+            {
+                XmlNode styleNode = doc.CreateElement("ID");
+                styleNode.AppendChild(doc.CreateTextNode(recordId));
+                placemarkNode.AppendChild(styleNode);
+            }
 
             if (!String.IsNullOrEmpty(description))
             {
@@ -533,7 +582,7 @@ namespace USC.GISResearchLab.Common.Core.KML
             }
         }
 
-        public void AddSqlGeographyPolygon(SqlGeography sqlGeographyPolygon, string name, string description)
+        public void AddSqlGeographyPolygon(SqlGeography sqlGeographyPolygon, string name, string description, string recordId)
         {
             Color color = ColorUtils.RandomColor(RandomCount);
             string styleName = "style" + color.ToArgb();
@@ -541,29 +590,37 @@ namespace USC.GISResearchLab.Common.Core.KML
 
             List<SqlGeography> sqlGeographies = new List<SqlGeography>();
             sqlGeographies.Add(sqlGeographyPolygon);
-            AddSqlGeographyPolygons(sqlGeographies, name, styleName, description);
+            AddSqlGeographyPolygons(sqlGeographies, name, styleName, description, recordId);
         }
 
-         public void AddSqlGeographyPolygon(SqlGeography sqlGeographyPolygon, string name, string styleName, string description)
+         public void AddSqlGeographyPolygon(SqlGeography sqlGeographyPolygon, string name, string styleName, string description, string recordId)
          {
              List<SqlGeography> sqlGeographies = new List<SqlGeography>();
              sqlGeographies.Add(sqlGeographyPolygon);
-             AddSqlGeographyPolygons(sqlGeographies, name, styleName, description);
+             AddSqlGeographyPolygons(sqlGeographies, name, styleName, description, recordId);
          }
 
-        public void AddSqlGeographyPolygons(List<SqlGeography> sqlGeographyPolygons, string name, string description)
+        public void AddSqlGeographyPolygons(List<SqlGeography> sqlGeographyPolygons, string name, string description,string recordId)
         {
             Color color = ColorUtils.RandomColor(RandomCount);
             string styleName = "style" + color.ToArgb();
             AddStylePolygon(styleName, color, false, true, 3.0);
 
-            AddSqlGeographyPolygons(sqlGeographyPolygons, name, styleName, description);
+            AddSqlGeographyPolygons(sqlGeographyPolygons, name, styleName, description, recordId);
         }
 
-        public void AddSqlGeographyPolygons(List<SqlGeography> sqlGeographyPolygons, string name, string styleName, string description)
+        public void AddSqlGeographyPolygons(List<SqlGeography> sqlGeographyPolygons, string name, string styleName, string description, string recordId)
         {
             XmlNode PlacemarkNode = doc.CreateElement("Placemark");
             documentNode.AppendChild(PlacemarkNode);
+
+            if (!String.IsNullOrEmpty(recordId))
+            {
+                XmlNode styleNode = doc.CreateElement("ID");
+                styleNode.AppendChild(doc.CreateTextNode(recordId));
+                PlacemarkNode.AppendChild(styleNode);
+            }
+
             XmlNode nameNode = doc.CreateElement("name");
             nameNode.AppendChild(doc.CreateTextNode(name));
             PlacemarkNode.AppendChild(nameNode);
@@ -702,7 +759,7 @@ namespace USC.GISResearchLab.Common.Core.KML
 
             XmlNode extrudeNode = doc.CreateElement("extrude");
             polygonNode.AppendChild(extrudeNode);
-            extrudeNode.AppendChild(doc.CreateTextNode("1"));
+            extrudeNode.AppendChild(doc.CreateTextNode("2"));
 
             XmlNode tessellateNode = doc.CreateElement("tessellate");
             polygonNode.AppendChild(tessellateNode);
@@ -710,7 +767,7 @@ namespace USC.GISResearchLab.Common.Core.KML
 
             XmlNode altitudeModeNode = doc.CreateElement("altitudeMode");
             polygonNode.AppendChild(altitudeModeNode);
-            altitudeModeNode.AppendChild(doc.CreateTextNode("absolute"));
+            altitudeModeNode.AppendChild(doc.CreateTextNode("relativeToGround"));
 
 
             int numberOfRings = sqlGeographyPolygon.NumRings().Value;
@@ -791,29 +848,37 @@ namespace USC.GISResearchLab.Common.Core.KML
             }
         }
 
-        public void AddSqlGeographyPoint(SqlGeography sqlGeography, string name, string description)
+        public void AddSqlGeographyPoint(SqlGeography sqlGeography, string name, string description, string recordId)
         {
             List<SqlGeography> sqlGeographies = new List<SqlGeography>();
             sqlGeographies.Add(sqlGeography);
-            AddSqlGeographyPoints(sqlGeographies, name, null, description);
+            AddSqlGeographyPoints(sqlGeographies, name, null, description, recordId);
         }
 
-        public void AddSqlGeographyPoint( SqlGeography  sqlGeography, string name, string styleName, string description)
+        public void AddSqlGeographyPoint( SqlGeography  sqlGeography, string name, string styleName, string description, string recordId)
         {
             List<SqlGeography> sqlGeographies = new List<SqlGeography>();
             sqlGeographies.Add(sqlGeography);
-            AddSqlGeographyPoints(sqlGeographies, name, styleName, description);
+            AddSqlGeographyPoints(sqlGeographies, name, styleName, description, recordId);
         }
 
-        public void AddSqlGeographyPoints(List<SqlGeography> sqlGeographyPoints, string name, string description)
+        public void AddSqlGeographyPoints(List<SqlGeography> sqlGeographyPoints, string name, string description,string recordId)
         {
-            AddSqlGeographyPoints(sqlGeographyPoints, name, null, description);
+            AddSqlGeographyPoints(sqlGeographyPoints, name, null, description, recordId);
         }
 
-        public void AddSqlGeographyPoints(List<SqlGeography> sqlGeographies, string name, string styleName, string description)
+        public void AddSqlGeographyPoints(List<SqlGeography> sqlGeographies, string name, string styleName, string description, string recordId)
         {
             XmlNode PlacemarkNode = doc.CreateElement("Placemark");
             documentNode.AppendChild(PlacemarkNode);
+
+            if (!String.IsNullOrEmpty(recordId))
+            {
+                XmlNode styleNode = doc.CreateElement("ID");
+                styleNode.AppendChild(doc.CreateTextNode(recordId));
+                PlacemarkNode.AppendChild(styleNode);
+            }
+
             XmlNode nameNode = doc.CreateElement("name");
             nameNode.AppendChild(doc.CreateTextNode(name));
             PlacemarkNode.AppendChild(nameNode);
@@ -900,7 +965,7 @@ namespace USC.GISResearchLab.Common.Core.KML
             coordinateNode.AppendChild(doc.CreateTextNode(coordinates));
         }
 
-        public void AddSqlGeographyLine(SqlGeography sqlGeography, string name, string description)
+        public void AddSqlGeographyLine(SqlGeography sqlGeography, string name, string description, string recordId)
         {
             Color color = ColorUtils.RandomColor(RandomCount);
             string styleName = "style" + color.ToArgb();
@@ -908,29 +973,36 @@ namespace USC.GISResearchLab.Common.Core.KML
 
             List<SqlGeography> sqlGeographies = new List<SqlGeography>();
             sqlGeographies.Add(sqlGeography);
-            AddSqlGeographyLines(sqlGeographies, name, styleName, description);
+            AddSqlGeographyLines(sqlGeographies, name, styleName, description, recordId);
         }
 
-        public void AddSqlGeographyLine(SqlGeography sqlGeography, string name, string styleName, string description)
+        public void AddSqlGeographyLine(SqlGeography sqlGeography, string name, string styleName, string description, string recordId)
         {
             List<SqlGeography> sqlGeographies = new List<SqlGeography>();
             sqlGeographies.Add(sqlGeography);
-            AddSqlGeographyLines(sqlGeographies, name, styleName, description);
+            AddSqlGeographyLines(sqlGeographies, name, styleName, description, recordId);
         }
 
-        public void AddSqlGeographyLines(List<SqlGeography> sqlGeographyLines, string name, string description)
+        public void AddSqlGeographyLines(List<SqlGeography> sqlGeographyLines, string name, string description, string recordId)
         {
             Color color = ColorUtils.RandomColor(RandomCount);
             string styleName = "style" + color.ToArgb();
             AddStyleLine(styleName, color, 3.0);
 
-            AddSqlGeographyLines(sqlGeographyLines, name, styleName, description);
+            AddSqlGeographyLines(sqlGeographyLines, name, styleName, description, recordId);
         }
 
-        public void AddSqlGeographyLines(List<SqlGeography> sqlGeographies, string name, string styleName, string description)
+        public void AddSqlGeographyLines(List<SqlGeography> sqlGeographies, string name, string styleName, string description,string recordId)
         {
             XmlNode PlacemarkNode = doc.CreateElement("Placemark");
             documentNode.AppendChild(PlacemarkNode);
+
+            if (!String.IsNullOrEmpty(recordId))
+            {
+                XmlNode styleNode = doc.CreateElement("ID");
+                styleNode.AppendChild(doc.CreateTextNode(recordId));
+                PlacemarkNode.AppendChild(styleNode);
+            }
 
             XmlNode nameNode = doc.CreateElement("name");
             nameNode.AppendChild(doc.CreateTextNode(name));
@@ -949,7 +1021,6 @@ namespace USC.GISResearchLab.Common.Core.KML
                 styleNode.AppendChild(doc.CreateTextNode("#" + styleName));
                 PlacemarkNode.AppendChild(styleNode);
             }
-
 
             XmlNode multiGeometryNode = null;
 
@@ -1023,7 +1094,7 @@ namespace USC.GISResearchLab.Common.Core.KML
 
             XmlNode extrudeNode = doc.CreateElement("extrude");
             LineNode.AppendChild(extrudeNode);
-            extrudeNode.AppendChild(doc.CreateTextNode("1"));
+            extrudeNode.AppendChild(doc.CreateTextNode("2"));
 
             XmlNode tessellateNode = doc.CreateElement("tessellate");
             LineNode.AppendChild(tessellateNode);
@@ -1031,7 +1102,7 @@ namespace USC.GISResearchLab.Common.Core.KML
 
             XmlNode altitudeModeNode = doc.CreateElement("altitudeMode");
             LineNode.AppendChild(altitudeModeNode);
-            altitudeModeNode.AppendChild(doc.CreateTextNode("absolute"));
+            altitudeModeNode.AppendChild(doc.CreateTextNode("relativeToGround"));
 
             string coordinates = "";
             int numberOfPoints = sqlGeographyLine.STNumPoints().Value;
