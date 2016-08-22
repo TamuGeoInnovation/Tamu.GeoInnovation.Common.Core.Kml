@@ -294,6 +294,7 @@ namespace USC.GISResearchLab.Common.Core.KML
             nameNode.AppendChild(doc.CreateTextNode(name));
             PlacemarkNode.AppendChild(nameNode);
 
+
             if (!String.IsNullOrEmpty(description))
             {
                 XmlNode descriptionNode = doc.CreateElement("description");
@@ -322,35 +323,39 @@ namespace USC.GISResearchLab.Common.Core.KML
             nameNode.AppendChild(doc.CreateTextNode(name));
             PlacemarkNode.AppendChild(nameNode);
 
-
-            if (!String.IsNullOrEmpty(description))
-            {
-                XmlNode dataNode = doc.CreateElement("ExtendedData");
-                PlacemarkNode.AppendChild(dataNode);
-
-                XmlElement dataRecordNode = doc.CreateElement("Data");
-                dataRecordNode.SetAttribute("name", "recordId");
-
-                XmlNode dataRecordElement = doc.CreateElement("value");
-
-                dataRecordElement.AppendChild(doc.CreateTextNode(recordId));
-                dataRecordNode.AppendChild(dataRecordElement);
-
-                XmlElement dataSourceNode = doc.CreateElement("Data");
-                dataSourceNode.SetAttribute("name", "source");
-
-                XmlNode dataSourceElement = doc.CreateElement("value");
-
-                dataSourceElement.AppendChild(doc.CreateTextNode(description));
-                dataSourceNode.AppendChild(dataSourceElement);
+            XmlNode descriptionNode = doc.CreateElement("description");
+            descriptionNode.AppendChild(doc.CreateTextNode(recordId));
+            PlacemarkNode.AppendChild(descriptionNode);
 
 
-                dataNode.AppendChild(dataRecordNode);
-                dataNode.AppendChild(dataSourceNode);
+            //if (!String.IsNullOrEmpty(description))
+            //{
+            //    XmlNode dataNode = doc.CreateElement("ExtendedData");
+            //    PlacemarkNode.AppendChild(dataNode);
 
-                PlacemarkNode.AppendChild(dataNode);
+            //    XmlElement dataRecordNode = doc.CreateElement("Data");
+            //    dataRecordNode.SetAttribute("name", "recordId");
 
-            }
+            //    XmlNode dataRecordElement = doc.CreateElement("value");
+
+            //    dataRecordElement.AppendChild(doc.CreateTextNode(recordId));
+            //    dataRecordNode.AppendChild(dataRecordElement);
+
+            //    XmlElement dataSourceNode = doc.CreateElement("Data");
+            //    dataSourceNode.SetAttribute("name", "source");
+
+            //    XmlNode dataSourceElement = doc.CreateElement("value");
+
+            //    dataSourceElement.AppendChild(doc.CreateTextNode(description));
+            //    dataSourceNode.AppendChild(dataSourceElement);
+
+
+            //    dataNode.AppendChild(dataRecordNode);
+            //    dataNode.AppendChild(dataSourceNode);
+
+            //    PlacemarkNode.AppendChild(dataNode);
+
+            //}
             XmlNode PointNode = doc.CreateElement("Point");
             PlacemarkNode.AppendChild(PointNode);
             XmlNode coordinateNode = doc.CreateElement("coordinates");
@@ -538,33 +543,38 @@ namespace USC.GISResearchLab.Common.Core.KML
             nameNode.AppendChild(doc.CreateTextNode(name));
             placemarkNode.AppendChild(nameNode);
 
-            if (!String.IsNullOrEmpty(description))
-            {
-                XmlNode dataNode = doc.CreateElement("ExtendedData");
-                placemarkNode.AppendChild(dataNode);
+            XmlNode descriptionNode = doc.CreateElement("description");
+            descriptionNode.AppendChild(doc.CreateTextNode(recordId));
+            placemarkNode.AppendChild(descriptionNode);
 
-                XmlElement dataRecordNode = doc.CreateElement("Data");
-                dataRecordNode.SetAttribute("name", "recordId");
 
-                XmlNode dataRecordElement = doc.CreateElement("value");
+            //if (!String.IsNullOrEmpty(description))
+            //{
+            //    XmlNode dataNode = doc.CreateElement("ExtendedData");
+            //    placemarkNode.AppendChild(dataNode);
 
-                dataRecordElement.AppendChild(doc.CreateTextNode(recordId));
-                dataRecordNode.AppendChild(dataRecordElement);
+            //    XmlElement dataRecordNode = doc.CreateElement("Data");
+            //    dataRecordNode.SetAttribute("name", "recordId");
 
-                XmlElement dataSourceNode = doc.CreateElement("Data");
-                dataSourceNode.SetAttribute("name", "source");
+            //    XmlNode dataRecordElement = doc.CreateElement("value");
 
-                XmlNode dataSourceElement = doc.CreateElement("value");
+            //    dataRecordElement.AppendChild(doc.CreateTextNode(recordId));
+            //    dataRecordNode.AppendChild(dataRecordElement);
 
-                dataSourceElement.AppendChild(doc.CreateTextNode(description));
-                dataSourceNode.AppendChild(dataSourceElement);
+            //    XmlElement dataSourceNode = doc.CreateElement("Data");
+            //    dataSourceNode.SetAttribute("name", "source");
 
-                dataNode.AppendChild(dataRecordNode);
-                dataNode.AppendChild(dataSourceNode);
+            //    XmlNode dataSourceElement = doc.CreateElement("value");
 
-                placemarkNode.AppendChild(dataNode);
+            //    dataSourceElement.AppendChild(doc.CreateTextNode(description));
+            //    dataSourceNode.AppendChild(dataSourceElement);
 
-            }
+            //    dataNode.AppendChild(dataRecordNode);
+            //    dataNode.AppendChild(dataSourceNode);
+
+            //    placemarkNode.AppendChild(dataNode);
+
+            //}
 
             if (!String.IsNullOrEmpty(styleName))
             {
@@ -647,35 +657,38 @@ namespace USC.GISResearchLab.Common.Core.KML
             nameNode.AppendChild(doc.CreateTextNode(name));
             PlacemarkNode.AppendChild(nameNode);
 
+            XmlNode descriptionNode = doc.CreateElement("description");
+            descriptionNode.AppendChild(doc.CreateTextNode(recordId));
+            PlacemarkNode.AppendChild(descriptionNode);
 
-            if (!String.IsNullOrEmpty(description))
-            {
-                XmlNode dataNode = doc.CreateElement("ExtendedData");
-                PlacemarkNode.AppendChild(dataNode);
+            //if (!String.IsNullOrEmpty(description))
+            //{
+            //    XmlNode dataNode = doc.CreateElement("ExtendedData");
+            //    PlacemarkNode.AppendChild(dataNode);
 
-                XmlElement dataRecordNode = doc.CreateElement("Data");
-                dataRecordNode.SetAttribute("name", "recordId");
+            //    XmlElement dataRecordNode = doc.CreateElement("Data");
+            //    dataRecordNode.SetAttribute("name", "recordId");
 
-                XmlNode dataRecordElement = doc.CreateElement("value");
+            //    XmlNode dataRecordElement = doc.CreateElement("value");
 
-                dataRecordElement.AppendChild(doc.CreateTextNode(recordId));
-                dataRecordNode.AppendChild(dataRecordElement);
+            //    dataRecordElement.AppendChild(doc.CreateTextNode(recordId));
+            //    dataRecordNode.AppendChild(dataRecordElement);
 
-                XmlElement dataSourceNode = doc.CreateElement("Data");
-                dataSourceNode.SetAttribute("name", "source");
+            //    XmlElement dataSourceNode = doc.CreateElement("Data");
+            //    dataSourceNode.SetAttribute("name", "source");
 
-                XmlNode dataSourceElement = doc.CreateElement("value");
+            //    XmlNode dataSourceElement = doc.CreateElement("value");
 
-                dataSourceElement.AppendChild(doc.CreateTextNode(description));
-                dataSourceNode.AppendChild(dataSourceElement);
+            //    dataSourceElement.AppendChild(doc.CreateTextNode(description));
+            //    dataSourceNode.AppendChild(dataSourceElement);
 
 
-                dataNode.AppendChild(dataRecordNode);
-                dataNode.AppendChild(dataSourceNode);
+            //    dataNode.AppendChild(dataRecordNode);
+            //    dataNode.AppendChild(dataSourceNode);
 
-                PlacemarkNode.AppendChild(dataNode);
+            //    PlacemarkNode.AppendChild(dataNode);
 
-            }
+            //}
 
             if (!String.IsNullOrEmpty(styleName))
             {
@@ -921,32 +934,36 @@ namespace USC.GISResearchLab.Common.Core.KML
             nameNode.AppendChild(doc.CreateTextNode(name));
             PlacemarkNode.AppendChild(nameNode);
 
-            if (!String.IsNullOrEmpty(description))
-            {
-                XmlNode dataNode = doc.CreateElement("ExtendedData");
-                PlacemarkNode.AppendChild(dataNode);
+            XmlNode descriptionNode = doc.CreateElement("description");
+            descriptionNode.AppendChild(doc.CreateTextNode(recordId));
+            PlacemarkNode.AppendChild(descriptionNode);
 
-                XmlElement dataRecordNode = doc.CreateElement("Data");
-                dataRecordNode.SetAttribute("name", "recordId");
+            //if (!String.IsNullOrEmpty(description))
+            //{
+            //    XmlNode dataNode = doc.CreateElement("ExtendedData");
+            //    PlacemarkNode.AppendChild(dataNode);
 
-                XmlNode dataRecordElement = doc.CreateElement("value");
+            //    XmlElement dataRecordNode = doc.CreateElement("Data");
+            //    dataRecordNode.SetAttribute("name", "recordId");
 
-                dataRecordElement.AppendChild(doc.CreateTextNode(recordId));
-                dataRecordNode.AppendChild(dataRecordElement);
+            //    XmlNode dataRecordElement = doc.CreateElement("value");
 
-                XmlElement dataSourceNode = doc.CreateElement("Data");
-                dataSourceNode.SetAttribute("name", "source");
+            //    dataRecordElement.AppendChild(doc.CreateTextNode(recordId));
+            //    dataRecordNode.AppendChild(dataRecordElement);
 
-                XmlNode dataSourceElement = doc.CreateElement("value");
-                dataSourceElement.AppendChild(doc.CreateTextNode(description));
-                dataSourceNode.AppendChild(dataSourceElement);
+            //    XmlElement dataSourceNode = doc.CreateElement("Data");
+            //    dataSourceNode.SetAttribute("name", "source");
 
-                dataNode.AppendChild(dataRecordNode);
-                dataNode.AppendChild(dataSourceNode);
+            //    XmlNode dataSourceElement = doc.CreateElement("value");
+            //    dataSourceElement.AppendChild(doc.CreateTextNode(description));
+            //    dataSourceNode.AppendChild(dataSourceElement);
 
-                PlacemarkNode.AppendChild(dataNode);
+            //    dataNode.AppendChild(dataRecordNode);
+            //    dataNode.AppendChild(dataSourceNode);
 
-            }
+            //    PlacemarkNode.AppendChild(dataNode);
+
+            //}
 
             if (!String.IsNullOrEmpty(styleName))
             {
@@ -1059,33 +1076,37 @@ namespace USC.GISResearchLab.Common.Core.KML
             nameNode.AppendChild(doc.CreateTextNode(name));
             PlacemarkNode.AppendChild(nameNode);
 
-            if (!String.IsNullOrEmpty(description))
-            {
-                XmlNode dataNode = doc.CreateElement("ExtendedData");
-                PlacemarkNode.AppendChild(dataNode);
+            XmlNode descriptionNode = doc.CreateElement("description");
+            descriptionNode.AppendChild(doc.CreateTextNode(recordId));
+            PlacemarkNode.AppendChild(descriptionNode);
 
-                XmlElement dataRecordNode = doc.CreateElement("Data");
-                dataRecordNode.SetAttribute("name", "recordId");
+            //if (!String.IsNullOrEmpty(description))
+            //{
+            //    XmlNode dataNode = doc.CreateElement("ExtendedData");
+            //    PlacemarkNode.AppendChild(dataNode);
 
-                XmlNode dataRecordElement = doc.CreateElement("value");
+            //    XmlElement dataRecordNode = doc.CreateElement("Data");
+            //    dataRecordNode.SetAttribute("name", "recordId");
 
-                dataRecordElement.AppendChild(doc.CreateTextNode(recordId));
-                dataRecordNode.AppendChild(dataRecordElement);
+            //    XmlNode dataRecordElement = doc.CreateElement("value");
 
-                XmlElement dataSourceNode = doc.CreateElement("Data");
-                dataSourceNode.SetAttribute("name", "source");
+            //    dataRecordElement.AppendChild(doc.CreateTextNode(recordId));
+            //    dataRecordNode.AppendChild(dataRecordElement);
 
-                XmlNode dataSourceElement = doc.CreateElement("value");
+            //    XmlElement dataSourceNode = doc.CreateElement("Data");
+            //    dataSourceNode.SetAttribute("name", "source");
 
-                dataSourceElement.AppendChild(doc.CreateTextNode(description));
-                dataSourceNode.AppendChild(dataSourceElement);
+            //    XmlNode dataSourceElement = doc.CreateElement("value");
 
-                dataNode.AppendChild(dataRecordNode);
-                dataNode.AppendChild(dataSourceNode);
+            //    dataSourceElement.AppendChild(doc.CreateTextNode(description));
+            //    dataSourceNode.AppendChild(dataSourceElement);
 
-                PlacemarkNode.AppendChild(dataNode);
+            //    dataNode.AppendChild(dataRecordNode);
+            //    dataNode.AppendChild(dataSourceNode);
 
-            }
+            //    PlacemarkNode.AppendChild(dataNode);
+
+            //}
 
             if (!String.IsNullOrEmpty(styleName))
             {
